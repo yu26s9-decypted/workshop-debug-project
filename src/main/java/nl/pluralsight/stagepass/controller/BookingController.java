@@ -1,12 +1,19 @@
 package nl.pluralsight.stagepass.controller;
 
-import jakarta.validation.Valid;
+import java.net.URI;
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import nl.pluralsight.stagepass.model.Booking;
 import nl.pluralsight.stagepass.service.BookingService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/bookings")
@@ -36,9 +43,11 @@ public class BookingController {
     }
 
     @PostMapping
+    @SuppressWarnings("null")
     public ResponseEntity<Booking> createBooking(@RequestBody Booking booking) {
         Booking created = bookingService.createBooking(booking);
-        return ResponseEntity.ok(created);
+        URI location = URI.create("/bookings/" + created.getId());
+        return ResponseEntity.created(location).body(created);
     }
 
     @DeleteMapping("/{id}")
