@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import nl.pluralsight.stagepass.model.Concert;
+import nl.pluralsight.stagepass.model.ConcertSummary;
 import nl.pluralsight.stagepass.service.BookingService;
 import nl.pluralsight.stagepass.service.ConcertService;
 
@@ -49,6 +50,13 @@ public class ConcertController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+     @GetMapping("/{id}/summary")
+     public ResponseEntity<ConcertSummary> getConcertSummary(@PathVariable Long id ){
+        return ResponseEntity.ok(concertService.concertSummary(id));
+     }
+
+    
 
     @PostMapping
     public ResponseEntity<Concert> createConcert(@RequestBody Concert concert) {
