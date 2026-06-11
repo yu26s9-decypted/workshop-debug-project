@@ -38,6 +38,11 @@ public class ConcertController {
         return ResponseEntity.ok(concertService.getConcertsByArtist(artistId));
     }
 
+    @GetMapping("/upcoming")
+    public ResponseEntity<List<Concert>> getUpcomingConcert(){
+        return ResponseEntity.ok(concertService.getUpcomingConcert());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Concert> getConcertById(@PathVariable Long id) {
         return concertService.getConcertById(id)

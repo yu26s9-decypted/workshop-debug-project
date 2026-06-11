@@ -1,5 +1,6 @@
 package nl.pluralsight.stagepass.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +32,11 @@ public class ConcertService {
 
     public List<Concert> getConcertsByArtist(Long artistId){
         return concertRepository.findByArtistId(artistId);
+    }
+
+    public List<Concert> getUpcomingConcert(){
+        LocalDate now = LocalDate.now();
+        return concertRepository.findByDateAfterOrderByDateAsc(now);
     }
 
     public Optional<Concert> updateConcert(Long id, Concert updatedConcert) {
