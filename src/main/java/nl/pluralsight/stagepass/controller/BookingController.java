@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
 import nl.pluralsight.stagepass.model.Booking;
 import nl.pluralsight.stagepass.service.BookingService;
 
@@ -45,7 +46,7 @@ public class BookingController {
 
     @PostMapping
     @SuppressWarnings("null")
-    public ResponseEntity<Booking> createBooking(@RequestBody Booking booking) {
+    public ResponseEntity<Booking> createBooking(@Valid @RequestBody Booking booking) {
         Booking created = bookingService.createBooking(booking);
         URI location = URI.create("/bookings/" + created.getId());
         return ResponseEntity.created(location).body(created);

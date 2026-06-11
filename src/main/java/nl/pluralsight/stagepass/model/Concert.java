@@ -1,9 +1,19 @@
 package nl.pluralsight.stagepass.model;
 
-import jakarta.persistence.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 public class Concert {
@@ -12,8 +22,10 @@ public class Concert {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message="Can't be blank")
     private String title;
 
+    @FutureOrPresent
     private LocalDate date;
 
     @ManyToOne
@@ -24,10 +36,13 @@ public class Concert {
     @JoinColumn(name = "venue_id")
     private Venue venue;
 
+    @Positive
     private int totalSeats;
 
     private int availableSeats;
 
+    @NotNull
+    @DecimalMin("0.01")
     private BigDecimal ticketPrice;
 
     public Concert() {}

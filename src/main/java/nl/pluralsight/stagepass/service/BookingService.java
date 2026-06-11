@@ -54,8 +54,6 @@ public class BookingService {
             throw new InsufficientSeatsException("This concert is sold out and don't have enough seats available.");
         } 
 
-        
-
         concert.setAvailableSeats(concert.getAvailableSeats() - booking.getNumberOfTickets());
             
 
@@ -66,6 +64,10 @@ public class BookingService {
 
     public boolean cancelBooking(Long id) {
         if (bookingRepository.existsById(id)) {
+            // Concert concert = concertRepository.findById(id)
+            //     .orElseThrow(() -> new RuntimeException("Concert not found"));
+
+            // concert.setAvailableSeats(concert.getAvailableSeats() + );
             bookingRepository.deleteById(id);
             return true;
         }

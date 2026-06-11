@@ -1,9 +1,19 @@
 package nl.pluralsight.stagepass.model;
 
-import jakarta.persistence.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Booking {
@@ -12,14 +22,19 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message="Name is required")
     private String customerName;
 
+    @NotBlank(message="Email is required")
+    @Email(message="Email is invalid")
     private String customerEmail;
 
     @ManyToOne
     @JoinColumn(name = "concert_id")
     private Concert concert;
 
+    @Min(1)
+    @Max(10)
     private int numberOfTickets;
 
     private BigDecimal totalPrice;
