@@ -33,7 +33,7 @@ public class BookingService {
     }
 
     public List<Booking> getBookingsByConcert(Long concertId) {
-        return bookingRepository.findAll();
+        return bookingRepository.findByConcertId(concertId);
     }
 
     @Transactional
@@ -43,7 +43,6 @@ public class BookingService {
 
         // Compute total price
         BigDecimal price = BigDecimal.valueOf(booking.getNumberOfTickets()).multiply(concert.getTicketPrice());
-        
         booking.setTotalPrice(price);
 
         // Set booking date and concert reference
