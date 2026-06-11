@@ -1,12 +1,12 @@
 package nl.pluralsight.stagepass.service;
 
-import nl.pluralsight.stagepass.model.Concert;
-import nl.pluralsight.stagepass.repository.ConcertRepository;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+import nl.pluralsight.stagepass.model.Concert;
+import nl.pluralsight.stagepass.repository.ConcertRepository;
 
 @Service
 public class ConcertService {

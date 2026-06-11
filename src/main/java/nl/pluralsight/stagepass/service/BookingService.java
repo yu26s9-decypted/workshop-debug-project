@@ -1,17 +1,17 @@
 package nl.pluralsight.stagepass.service;
 
-import nl.pluralsight.stagepass.exception.InsufficientSeatsException;
-import nl.pluralsight.stagepass.model.Booking;
-import nl.pluralsight.stagepass.model.Concert;
-import nl.pluralsight.stagepass.repository.BookingRepository;
-import nl.pluralsight.stagepass.repository.ConcertRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import nl.pluralsight.stagepass.model.Booking;
+import nl.pluralsight.stagepass.model.Concert;
+import nl.pluralsight.stagepass.repository.BookingRepository;
+import nl.pluralsight.stagepass.repository.ConcertRepository;
 
 @Service
 public class BookingService {
@@ -47,6 +47,15 @@ public class BookingService {
         // Set booking date and concert reference
         booking.setBookingDate(LocalDate.now());
         booking.setConcert(concert);
+        
+        if(concert.getAvailableSeats() < booking.getNumberOfTickets()) {
+            throw new RuntimeException("This concert is sold out and don't have enough seats available.");
+        } 
+
+        concert.setAvailableSeats(concert.getAvailableSeats() - booking.getNumberOfTickets());
+            
+
+       
 
         return bookingRepository.save(booking);
     }
